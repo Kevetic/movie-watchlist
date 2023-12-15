@@ -5,6 +5,7 @@ import MovieBlock from "./components/MovieBlock/MovieBlock";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Modal from "./components/Modal/Modal";
+import CustomAlert from "./components/CustomAlert/CustomAlert";
 
 function App() {
   const [trendData, setTrendData] = useState([]);
@@ -16,6 +17,9 @@ function App() {
   const [randomMovie, setRandomMovie] = useState();
   const [showModal, setShowModal] = useState();
   const [selected, setSelected] = useState();
+  const [watchList, setWatchList] = useState([]);
+  const [favorite, setFavorite] = useState([]);
+  const [addedAction, setAddedAction] = useState({ action: false, type: "" });
 
   const handleFetchData = async () => {
     const response = await fetch(
@@ -46,6 +50,27 @@ function App() {
     fetchData();
   }, [trendData, home]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setAddedAction({ action: false, type: "" });
+    }, 5000);
+  }, [watchList, favorite]);
+
+  const handleWatchList = (movie) => {
+    setAddedAction({
+      action: true,
+      type: "Watchlist",
+    });
+    setWatchList((prevWatchList) => [...prevWatchList, movie]);
+  };
+  const handleFavorites = (favorite) => {
+    setAddedAction({
+      action: true,
+      type: "Favorites",
+    });
+    setFavorite((prevFavorite) => [...prevFavorite, favorite]);
+  };
+
   const handleRandomChoice = () => {
     if (trendData && trendData.length > 0) {
       let randomItem = trendData[Math.floor(Math.random() * trendData.length)];
@@ -69,6 +94,7 @@ function App() {
 
   return (
     <>
+      {addedAction.type && <CustomAlert addedAction={addedAction} />}
       <Header
         openNav={openNav}
         setOpenNav={setOpenNav}
@@ -77,10 +103,22 @@ function App() {
         setHome={setHome}
         home={home}
         setShowModal={setShowModal}
+        watchList={watchList}
+        favorite={favorite}
       />
       {!openNav && !home && (
         <div className="category-container">
-          <MovieBlock movies={movies} tvShows={tvShows} category={category} />
+          <MovieBlock
+            movies={movies}
+            tvShows={tvShows}
+            category={category}
+            watchList={watchList}
+            favorite={favorite}
+            setWatchList={setWatchList}
+            setFavorite={setFavorite}
+            handleFavorites={handleFavorites}
+            handleWatchList={handleWatchList}
+          />
         </div>
       )}
       {home && <Home randomMovie={randomMovie} handleModal={handleModal} />}

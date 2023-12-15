@@ -15,7 +15,8 @@ export default function Home({ randomMovie, handleModal }) {
     >
       <div className="home-container" onClick={() => handleModal(randomMovie)}>
         <h1 className="home-page_title">
-          Check out: {name ? name : original_title}{" "}
+          Check out: <br />
+          {name ? name : original_title}{" "}
         </h1>
         <img src={`https://image.tmdb.org/t/p/w200${poster_path}`} />
       </div>

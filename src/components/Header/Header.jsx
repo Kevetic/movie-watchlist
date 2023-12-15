@@ -11,6 +11,8 @@ export default function Header({
   setCategory,
   setHome,
   setShowModal,
+  watchList,
+  favorite,
 }) {
   const defaultState = {
     hidden: {
@@ -34,12 +36,21 @@ export default function Header({
     navChoices.map((item, id) => {
       if (item.id == e && e == 0) {
         setCategory("movie");
+        handleCategory();
       }
       if (item.id == e && e == 1) {
         setCategory("tv");
+        handleCategory();
+      }
+      if (item.id == e && e == 2) {
+        console.log("this is watchlist");
+        setCategory("watchlist");
+      }
+      if (item.id == e && e == 3) {
+        console.log("this is favorite");
+        setCategory("favorite");
       }
     });
-    handleCategory();
     setOpenNav(false);
     setHome(false);
     setShowModal(false);
@@ -63,7 +74,7 @@ export default function Header({
           onClick={() => handleOpenNav()}
           className="hamburger"
           style={{
-            color: openNav ? "black" : "white",
+            color: "#45A29E",
           }}
         >
           {openNav ? <CloseIcon /> : <MenuIcon />}
@@ -71,7 +82,7 @@ export default function Header({
         <div
           className="home-icon"
           style={{
-            color: openNav ? "black" : "white",
+            color: "#45A29E",
           }}
           onClick={() => handleHomeButton()}
         >
