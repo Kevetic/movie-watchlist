@@ -3,15 +3,19 @@ import "./App.css";
 import { useEffect } from "react";
 import MovieBlock from "./components/MovieBlock/MovieBlock";
 import Header from "./components/Header/Header";
+import Home from "./components/Home/Home";
+import Modal from "./components/Modal/Modal";
 
 function App() {
-  const [trendData, setTrendData] = useState();
+  const [trendData, setTrendData] = useState([]);
   const [movies, setMovies] = useState();
   const [openNav, setOpenNav] = useState(false);
   const [tvShows, setTvShows] = useState();
   const [category, setCategory] = useState("");
-
-  // console.log(movies);
+  const [home, setHome] = useState(false);
+  const [randomMovie, setRandomMovie] = useState();
+  const [showModal, setShowModal] = useState();
+  const [selected, setSelected] = useState();
 
   const handleFetchData = async () => {
     const response = await fetch(
@@ -31,7 +35,23 @@ function App() {
 
   useEffect(() => {
     handleFetchData();
+    setHome(true);
   }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      handleRandomChoice();
+    }
+
+    fetchData();
+  }, [trendData, home]);
+
+  const handleRandomChoice = () => {
+    if (trendData && trendData.length > 0) {
+      let randomItem = trendData[Math.floor(Math.random() * trendData.length)];
+      setRandomMovie(randomItem);
+    }
+  };
 
   const handleCategory = () => {
     let movies = trendData.filter((movies) =>
@@ -42,6 +62,11 @@ function App() {
     setTvShows(shows);
   };
 
+  const handleModal = (e) => {
+    setShowModal(true);
+    setSelected(e);
+  };
+
   return (
     <>
       <Header
@@ -49,9 +74,22 @@ function App() {
         setOpenNav={setOpenNav}
         handleCategory={handleCategory}
         setCategory={setCategory}
+        setHome={setHome}
+        home={home}
+        setShowModal={setShowModal}
       />
-      {!openNav && (
-        <MovieBlock movies={movies} tvShows={tvShows} category={category} />
+      {!openNav && !home && (
+        <div className="category-container">
+          <MovieBlock movies={movies} tvShows={tvShows} category={category} />
+        </div>
+      )}
+      {home && <Home randomMovie={randomMovie} handleModal={handleModal} />}
+      {showModal && (
+        <Modal
+          showModal={showModal}
+          selected={selected}
+          setShowModal={setShowModal}
+        />
       )}
     </>
   );

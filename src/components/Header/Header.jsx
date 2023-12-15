@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
 
 export default function Header({
   openNav,
   setOpenNav,
   handleCategory,
   setCategory,
+  setHome,
+  setShowModal,
 }) {
   const defaultState = {
     hidden: {
@@ -36,16 +41,41 @@ export default function Header({
     });
     handleCategory();
     setOpenNav(false);
+    setHome(false);
+    setShowModal(false);
   };
+
+  const handleHomeButton = () => {
+    setHome(true);
+    setOpenNav(false);
+    setShowModal(false);
+  };
+
+  const handleOpenNav = () => {
+    setOpenNav(!openNav);
+    setShowModal(false);
+  };
+
   return (
     <header>
       <nav>
         <div
-          onClick={() => setOpenNav(!openNav)}
+          onClick={() => handleOpenNav()}
           className="hamburger"
-          style={{ color: openNav ? "black" : "white" }}
+          style={{
+            color: openNav ? "black" : "white",
+          }}
         >
-          X
+          {openNav ? <CloseIcon /> : <MenuIcon />}
+        </div>
+        <div
+          className="home-icon"
+          style={{
+            color: openNav ? "black" : "white",
+          }}
+          onClick={() => handleHomeButton()}
+        >
+          <LocalMoviesIcon />
         </div>
         <AnimatePresence>
           {openNav && (
@@ -55,7 +85,7 @@ export default function Header({
               exit={{
                 y: -500,
                 opacity: 0,
-                transition: { duration: 1, ease: "easeInOut" },
+                transition: { duration: 0.5, ease: "easeInOut" },
               }}
               transition={{
                 duration: 0.5,
