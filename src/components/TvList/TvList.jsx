@@ -25,7 +25,10 @@ export default function TvList({
               transition={{ duration: 0.5, type: "spring", damping: 10 }}
               key={idx}
             >
-              <div onClick={() => handleModal(showTitle)}>
+              <div
+                onClick={() => handleModal(showTitle)}
+                className="modal-clicker"
+              >
                 <img
                   src={`https://image.tmdb.org/t/p/w200${showTitle.poster_path}`}
                 />

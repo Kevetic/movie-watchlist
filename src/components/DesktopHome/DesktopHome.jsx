@@ -36,7 +36,7 @@ export default function DesktopHome({
           transition={{ duration: 1, type: "spring", damping: 10 }}
           key={idx}
         >
-          <div onClick={() => handleModal(film)}>
+          <div onClick={() => handleModal(film)} className="modal-clicker">
             <img src={`https://image.tmdb.org/t/p/w500${film.poster_path}`} />
             <h1 className="film-title">
               {film.original_title ? film.original_title : film.name}

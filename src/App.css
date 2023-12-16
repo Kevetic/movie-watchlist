@@ -218,6 +218,10 @@ li {
   display: none;
 }
 
+.modal-clicker {
+  cursor: pointer;
+}
+
 @media (min-width: 900px) {
   .mobile-app {
     display: none;

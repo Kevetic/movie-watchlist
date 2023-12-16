@@ -25,7 +25,7 @@ export default function FavoriteList({
               transition={{ duration: 0.5, type: "spring", damping: 10 }}
               key={idx}
             >
-              <div onClick={() => handleModal(title)}>
+              <div onClick={() => handleModal(title)} className="modal-clicker">
                 <img
                   src={`https://image.tmdb.org/t/p/w200${title.poster_path}`}
                 />
