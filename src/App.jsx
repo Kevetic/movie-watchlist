@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Modal from "./components/Modal/Modal";
 import CustomAlert from "./components/CustomAlert/CustomAlert";
+import DesktopHome from "./components/DesktopHome/DesktopHome";
 
 function App() {
   const [trendData, setTrendData] = useState([]);
@@ -94,37 +95,97 @@ function App() {
     setSelected(e);
   };
 
+  const navChoices = [
+    { id: 0, item: "Movies" },
+    { id: 1, item: "TV Shows" },
+    { id: 2, item: "Watchlist" },
+    { id: 3, item: "Favorites" },
+  ];
+
+  const handleClick = (e) => {
+    navChoices.map((item) => {
+      if (item.id == e && e == 0) {
+        setCategory("movie");
+        handleCategory();
+      }
+      if (item.id == e && e == 1) {
+        setCategory("tv");
+        handleCategory();
+      }
+      if (item.id == e && e == 2) {
+        setCategory("watchlist");
+      }
+      if (item.id == e && e == 3) {
+        setCategory("favorite");
+      }
+    });
+    setOpenNav(false);
+    setHome(false);
+    setShowModal(false);
+  };
+
+  const handleDeleteFavorites = (film) => {
+    let removedFilm = favorite.filter((newList) => {
+      return newList.id !== film.id;
+    });
+
+    setFavorite(removedFilm);
+  };
+  const handleDeleteWatchList = (film) => {
+    let removedFilm = watchList.filter((newList) => {
+      return newList.id !== film.id;
+    });
+
+    setWatchList(removedFilm);
+  };
+
+  const defaultState = {
+    hidden: {
+      opacity: 0,
+      y: 50,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
     <>
       {addedAction.type && <CustomAlert addedAction={addedAction} />}
-      <Header
-        openNav={openNav}
-        setOpenNav={setOpenNav}
-        handleCategory={handleCategory}
-        setCategory={setCategory}
-        setHome={setHome}
-        home={home}
-        setShowModal={setShowModal}
-        watchList={watchList}
-        favorite={favorite}
-      />
-      {!openNav && !home && (
-        <div className="category-container">
-          <MovieBlock
-            movies={movies}
-            tvShows={tvShows}
-            category={category}
-            watchList={watchList}
-            favorite={favorite}
-            setWatchList={setWatchList}
-            setFavorite={setFavorite}
-            handleFavorites={handleFavorites}
-            handleWatchList={handleWatchList}
-            handleModal={handleModal}
-          />
-        </div>
-      )}
-      {home && <Home randomMovie={randomMovie} handleModal={handleModal} />}
+      <div className="mobile-app">
+        <Header
+          openNav={openNav}
+          setOpenNav={setOpenNav}
+          handleCategory={handleCategory}
+          setCategory={setCategory}
+          setHome={setHome}
+          home={home}
+          setShowModal={setShowModal}
+          watchList={watchList}
+          favorite={favorite}
+          navChoices={navChoices}
+          handleClick={handleClick}
+          defaultState={defaultState}
+        />
+        {!openNav && !home && (
+          <div className="category-container">
+            <MovieBlock
+              movies={movies}
+              tvShows={tvShows}
+              category={category}
+              watchList={watchList}
+              favorite={favorite}
+              setWatchList={setWatchList}
+              setFavorite={setFavorite}
+              handleFavorites={handleFavorites}
+              handleWatchList={handleWatchList}
+              handleModal={handleModal}
+            />
+          </div>
+        )}
+        {home && <Home randomMovie={randomMovie} handleModal={handleModal} />}
+      </div>
       {showModal && (
         <Modal
           showModal={showModal}
@@ -132,6 +193,27 @@ function App() {
           setShowModal={setShowModal}
         />
       )}
+      <div className="desktop-app">
+        <DesktopHome
+          trendData={trendData}
+          navChoices={navChoices}
+          handleModal={handleModal}
+          handleClick={handleClick}
+          category={category}
+          movies={movies}
+          tvShows={tvShows}
+          setCategory={setCategory}
+          watchList={watchList}
+          favorite={favorite}
+          setWatchList={setWatchList}
+          setFavorite={setFavorite}
+          handleFavorites={handleFavorites}
+          handleWatchList={handleWatchList}
+          handleDeleteFavorites={handleDeleteFavorites}
+          handleDeleteWatchList={handleDeleteWatchList}
+          defaultState={defaultState}
+        />
+      </div>
     </>
   );
 }

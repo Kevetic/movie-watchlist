@@ -15,6 +15,8 @@ export default function MovieBlock({
   handleFavorites,
   handleWatchList,
   handleModal,
+  handleDeleteFavorites,
+  handleDeleteWatchList,
 }) {
   const defaultState = {
     hidden: {
@@ -27,20 +29,6 @@ export default function MovieBlock({
     },
   };
 
-  const handleDeleteFavorites = (film) => {
-    let removedFilm = favorite.filter((newList) => {
-      return newList.id !== film.id;
-    });
-
-    setFavorite(removedFilm);
-  };
-  const handleDeleteWatchList = (film) => {
-    let removedFilm = watchList.filter((newList) => {
-      return newList.id !== film.id;
-    });
-
-    setWatchList(removedFilm);
-  };
   const renderSelectedChoice = () => {
     switch (category) {
       case "movie":

@@ -11,9 +11,24 @@ body {
   background-color: #0b0c10;
   color: #45a29e;
 }
+
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #45a29e;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #0b0c10;
+  border-radius: 20px;
+  border: 3px solid #1f2833;
+}
+
 .single_block {
   text-align: center;
-  border: 1px solid white;
+  box-shadow: 1px 1px 2px #45a29e;
   padding: 10px;
   margin: 20px auto;
   border-radius: 10px;
@@ -109,6 +124,8 @@ li {
   align-items: center;
   text-align: center;
   font-size: clamp(0.8rem, 0.8rem, 2rem);
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .modal-container .title {
@@ -118,7 +135,7 @@ li {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: #55fcf1;
 }
 
 .row-one {
@@ -135,6 +152,7 @@ li {
   padding: 10px;
   position: absolute;
   top: 0;
+  color: #c5c6c7;
 }
 
 .home-page_title {
@@ -192,12 +210,64 @@ li {
   overflow: hidden;
 }
 
-/* @media (min-width: 900px) {
-  .mobile-nav {
+.desktop-app {
+  display: none;
+}
+
+.desktop_modal-img {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .mobile-app {
     display: none;
+  }
+  .desktop-app {
+    display: block;
+  }
+  .desktop_movie-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+  }
+  .desktop_singleBlocks {
+    margin: 10px;
+    box-shadow: 1px 1px 2px #45a29e;
+  }
+  .film-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .desktop-nav {
     display: flex;
     justify-content: space-evenly;
+    margin: 50px;
   }
-} */
+  .modal-container {
+    max-width: 50%;
+    margin: auto;
+    right: 30%;
+    font-size: 2rem;
+  }
+  .mobile_modal-img {
+    display: none;
+  }
+  .desktop_modal-img {
+    display: block;
+    margin: auto;
+  }
+  .modal-container .title {
+    font-size: 4rem;
+  }
+  .desktop-nav h1 {
+    cursor: pointer;
+  }
+}

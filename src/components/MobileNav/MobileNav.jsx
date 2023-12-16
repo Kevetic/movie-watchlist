@@ -9,8 +9,8 @@ export default function MobileNav({
   handleOpenNav,
   defaultState,
   openNav,
-  navChoices,
   handleClick,
+  navChoices,
 }) {
   return (
     <nav className="mobile-nav">
