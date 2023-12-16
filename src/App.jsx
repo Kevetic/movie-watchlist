@@ -57,6 +57,7 @@ function App() {
   }, [watchList, favorite]);
 
   const handleWatchList = (movie) => {
+    setShowModal(false);
     setAddedAction({
       action: true,
       type: "Watchlist",
@@ -64,6 +65,7 @@ function App() {
     setWatchList((prevWatchList) => [...prevWatchList, movie]);
   };
   const handleFavorites = (favorite) => {
+    setShowModal(false);
     setAddedAction({
       action: true,
       type: "Favorites",
@@ -118,6 +120,7 @@ function App() {
             setFavorite={setFavorite}
             handleFavorites={handleFavorites}
             handleWatchList={handleWatchList}
+            handleModal={handleModal}
           />
         </div>
       )}

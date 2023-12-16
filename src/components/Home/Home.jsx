@@ -6,7 +6,7 @@ export default function Home({ randomMovie, handleModal }) {
     return null;
   }
 
-  const { backdrop_path, name, original_title, poster_path } = randomMovie;
+  const { name, original_title, poster_path } = randomMovie;
   return (
     <motion.div
       className="home-page"

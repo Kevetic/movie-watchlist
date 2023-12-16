@@ -7,17 +7,9 @@ export default function MovieList({
   movies,
   handleWatchList,
   handleFavorites,
+  defaultState,
+  handleModal,
 }) {
-  const defaultState = {
-    hidden: {
-      opacity: 0,
-      x: 50,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-    },
-  };
   return (
     <motion.div
       initial="hidden"
@@ -33,7 +25,12 @@ export default function MovieList({
               transition={{ duration: 0.5, type: "spring", damping: 10 }}
               key={idx}
             >
-              <h1 className="block_title">{title.original_title}</h1>
+              <div onClick={() => handleModal(title)}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${title.poster_path}`}
+                />
+                <h1 className="block_title">{title.original_title}</h1>
+              </div>
               <div className="movie-btns">
                 <button onClick={() => handleWatchList(title)}>
                   <AddIcon />

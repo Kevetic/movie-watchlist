@@ -12,7 +12,6 @@ export default function Modal({ showModal, selected, setShowModal }) {
     release_date,
     vote_average,
   } = selected;
-  console.log(selected);
   return (
     <AnimatePresence>
       <motion.div
@@ -34,7 +33,7 @@ export default function Modal({ showModal, selected, setShowModal }) {
             <div>Rate R: {adult ? " Yes" : " No"} </div>
             <div>Release:{release_date}</div>
           </div>
-          <div>{overview}</div>
+          <div className="modal-overview">{overview}</div>
           <div className="rating">Rating: {vote_average}/10 </div>
         </div>
       </motion.div>

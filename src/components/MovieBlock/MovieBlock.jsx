@@ -3,7 +3,6 @@ import MovieList from "../MovieList/MovieList";
 import TvList from "../TvList/TvList";
 import WatchList from "../WatchList/WatchList";
 import FavoriteList from "../FavoritesList/FavoriteList";
-import CustomAlert from "../CustomAlert/CustomAlert";
 
 export default function MovieBlock({
   movies,
@@ -15,7 +14,33 @@ export default function MovieBlock({
   setFavorite,
   handleFavorites,
   handleWatchList,
+  handleModal,
 }) {
+  const defaultState = {
+    hidden: {
+      opacity: 0,
+      x: 50,
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+    },
+  };
+
+  const handleDeleteFavorites = (film) => {
+    let removedFilm = favorite.filter((newList) => {
+      return newList.id !== film.id;
+    });
+
+    setFavorite(removedFilm);
+  };
+  const handleDeleteWatchList = (film) => {
+    let removedFilm = watchList.filter((newList) => {
+      return newList.id !== film.id;
+    });
+
+    setWatchList(removedFilm);
+  };
   const renderSelectedChoice = () => {
     switch (category) {
       case "movie":
@@ -24,6 +49,8 @@ export default function MovieBlock({
             movies={movies}
             handleFavorites={handleFavorites}
             handleWatchList={handleWatchList}
+            defaultState={defaultState}
+            handleModal={handleModal}
           />
         );
       case "tv":
@@ -34,12 +61,30 @@ export default function MovieBlock({
             setFavorite={setFavorite}
             handleFavorites={handleFavorites}
             handleWatchList={handleWatchList}
+            defaultState={defaultState}
+            handleModal={handleModal}
           />
         );
       case "watchlist":
-        return <WatchList watchList={watchList} />;
+        return (
+          <WatchList
+            watchList={watchList}
+            defaultState={defaultState}
+            handleModal={handleModal}
+            handleFavorites={handleFavorites}
+            handleDeleteWatchList={handleDeleteWatchList}
+          />
+        );
       case "favorite":
-        return <FavoriteList favorite={favorite} />;
+        return (
+          <FavoriteList
+            favorite={favorite}
+            defaultState={defaultState}
+            handleModal={handleModal}
+            handleWatchList={handleWatchList}
+            handleDeleteFavorites={handleDeleteFavorites}
+          />
+        );
       default:
     }
   };

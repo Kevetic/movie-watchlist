@@ -1,21 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
 import AddIcon from "@mui/icons-material/Add";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import ClearIcon from "@mui/icons-material/Clear";
 
-//delete button
-
-export default function FavoriteList({ favorite }) {
-  const defaultState = {
-    hidden: {
-      opacity: 0,
-      x: 50,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-    },
-  };
+export default function FavoriteList({
+  favorite,
+  defaultState,
+  handleModal,
+  handleWatchList,
+  handleDeleteFavorites,
+}) {
   return (
     <motion.div
       initial="hidden"
@@ -31,10 +25,22 @@ export default function FavoriteList({ favorite }) {
               transition={{ duration: 0.5, type: "spring", damping: 10 }}
               key={idx}
             >
-              <h1 className="block_title">{title.original_title}</h1>
+              <div onClick={() => handleModal(title)}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${title.poster_path}`}
+                />
+                <h1 className="block_title">
+                  {title.media_type === "movie"
+                    ? title.original_title
+                    : title.name}
+                </h1>
+              </div>
               <div className="movie-btns">
                 <button onClick={() => handleWatchList(title)}>
                   <AddIcon />
+                </button>
+                <button onClick={() => handleDeleteFavorites(title)}>
+                  <ClearIcon />
                 </button>
               </div>
             </motion.div>
